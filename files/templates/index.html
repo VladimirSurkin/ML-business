@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+      <meta charset="utf-8">
+      <title>Предсказание вероятности оттока клиента</title>
+      <style>
+         table,thead,tbody,tfoot,tr,th,td {width: auto;height: auto;margin: 0;padding: 0;border: none;border-collapse: inherit;border-spacing: 0;border-color: inherit;vertical-align: inherit;text-align: left;font-weight: inherit;-webkit-border-horizontal-spacing: 0;-webkit-border-vertical-spacing: 0;}
+         table{
+            border: 1px solid #eee;
+            width: 100%;
+            margin-bottom: 20px;
+         }
+         table th {
+            font-weight: bold;
+            padding: 5px;
+            background: #efefef;
+            border: 1px solid #dddddd;
+         }
+         table td{
+            padding: 5px 10px;
+            border: 1px solid #eee;
+            text-align: left;
+         }
+         table tbody tr:nth-child(odd){
+            background: #fff;
+         }
+         table tbody tr:nth-child(even){
+            background: #F7F7F7;
+         }
+         table.with_head tbody tr:nth-child(1){
+            font-weight: bold;
+            padding: 5px;
+            background: #efefef;
+            border: 1px solid #dddddd;
+         }
+      </style>
+   </head>
+   <body>
+      <h1>Предсказание вероятности оттока клиента</h1>
+
+      <table>
+        <tr>
+            <th>HTTP Method</th>
+            <th>URI</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/predict</td>
+            <td>Предсказать вероятность по известным данным</td>
+        </tr>
+      </table>
+
+      <p>
+           Следующие GET параметры обязательны при запросе:
+      </p>
+
+      <table>
+         <tr>
+            <th>Название</th>
+            <th>Тип</th>
+            <th>Пример значения</th>
+            <th>Описание</th>
+         </tr>
+         {% for param in params %}
+            <tr>
+               <td>{{ param.name }}</td>
+               <td>{{ param.type }}</td>
+               <td>{{ param.example }}</td>
+               <td>{{ param.descr }}</td>
+            </tr>
+         {% endfor %}
+      </table>
+
+      <h2>Примеры ответа</h2>
+
+      <p>
+         Ответ возвращается в JSON формате.
+      </p>
+
+      <p>
+         После запроса на предсказание отмены возвращаются поля:
+      </p>
+
+      <table>
+           <tr><td>status</td><td>int</td><td>Статус работы скрипта (0 = что-то сломалось: 1 = все хорошо).</td></tr>
+           <tr><td>pred</td><td>int</td><td>Предсказание по <b>оттоку</b> клиента (1 = он уйдёт, 0 = останется).</td></tr>
+           <tr><td>pred_proba</td><td>float</td><td>Предсказание по <b>оттоку</b> клиента в долях (значение между 0 и 1, 1 = он уйдёт, 0 = останется).</td></tr>
+      </table>
+
+      <h2>Примеры запросов</h2>
+
+      <p>
+
+      </p>
+
+      <h2>Сохранённые модели</h2>
+
+      <table class="with_head">
+         {% for model in models %}
+            <tr>
+              {% for field in model %}
+                   <td>{{ field }}</td>
+              {% endfor %}
+            </tr>
+         {% endfor %}
+      </table>
+
+
+      <img src="{{ user_image }}" alt="User Image">
+</body>
+</html>
